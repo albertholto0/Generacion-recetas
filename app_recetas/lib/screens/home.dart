@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/widgets/navigation_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -46,21 +47,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Color(0xFFFFA366),
-        unselectedItemColor: Colors.black54,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Recetas'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant_menu),
-            label: '¡A cocinar!',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.kitchen), label: 'Alacena'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
-        ],
-      ),
+      bottomNavigationBar: BottomNavBar(currentIndex: 0, onTap: (index) {}),
     );
   }
 }
