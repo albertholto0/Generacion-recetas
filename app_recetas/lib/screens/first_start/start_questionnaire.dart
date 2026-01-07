@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'start_questionnaire.dart';
+import '../home.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+class StartQuestionnaireScreen extends StatelessWidget {
+  const StartQuestionnaireScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +14,15 @@ class WelcomeScreen extends StatelessWidget {
             children: [
               SizedBox(height: 32),
               Text(
-                'La inteligencia\nartificial que\ncocina contigo',
+                'Para crear recetas perfectas,\nnecesitamos conocerte mejor',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 32),
               Image.asset(
-                'assets/welcome.png',
-                width: 300,
-                height: 300,
+                'assets/questionnaire.png',
+                width: 250,
+                height: 250,
                 fit: BoxFit.contain,
               ),
               SizedBox(height: 48),
@@ -46,7 +46,7 @@ class WelcomeScreen extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    'Siguiente',
+                    'Comenzar',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -55,7 +55,24 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 32),
+              SizedBox(height: 15),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                },
+                child: Text(
+                  'Responder más tarde',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 118, 118, 118),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
