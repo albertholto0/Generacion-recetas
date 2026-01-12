@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/widgets/progress_bar.dart';
+import '/widgets/custom_input.dart';
 import 'question_3.dart';
 
 class Question2Screen extends StatefulWidget {
@@ -49,29 +50,7 @@ class _Question2ScreenState extends State<Question2Screen> {
                 fit: BoxFit.contain,
               ),
               const SizedBox(height: 24),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  _labels[_step],
-                  style: const TextStyle(fontSize: 15, color: Colors.black54),
-                ),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: _controller,
-                decoration: InputDecoration(
-                  hintText: 'Escribe aquí',
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-              ),
+              CustomInput(label: _labels[_step], controller: _controller),
               const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
