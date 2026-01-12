@@ -6,11 +6,34 @@ class CustomProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LinearProgressIndicator(
-      value: value,
-      backgroundColor: Colors.grey[200],
-      color: const Color(0xFFFFA366),
-      minHeight: 6,
+    const double barWidth = 200;
+    const double barHeight = 8;
+    const borderRadius = BorderRadius.all(Radius.circular(8));
+    return SizedBox(
+      width: barWidth,
+      height: barHeight,
+      child: Stack(
+        children: [
+          Container(
+            width: barWidth,
+            height: barHeight,
+            decoration: BoxDecoration(
+              color: const Color(0xFFE1D7E2),
+              borderRadius: borderRadius,
+            ),
+          ),
+          // Progreso
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            width: barWidth * value.clamp(0.0, 1.0),
+            height: barHeight,
+            decoration: BoxDecoration(
+              color: const Color(0xFF7B737F),
+              borderRadius: borderRadius,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

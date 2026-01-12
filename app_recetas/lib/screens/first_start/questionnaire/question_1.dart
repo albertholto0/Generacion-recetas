@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/widgets/progress_bar.dart';
+import 'question_2.dart';
 
 class Question1Screen extends StatefulWidget {
   const Question1Screen({super.key});
@@ -33,12 +34,12 @@ class _Question1ScreenState extends State<Question1Screen> {
           child: Column(
             children: [
               const SizedBox(height: 24),
-              CustomProgressBar(value: 0.2),
-              const SizedBox(height: 8),
               const Text(
                 'Paso 1 de 5',
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
               ),
+              const SizedBox(height: 8),
+              CustomProgressBar(value: 0.2),
               const SizedBox(height: 16),
               const Text(
                 '¿Con que herramientas\nde cocina cuentas?',
@@ -125,7 +126,11 @@ class _Question1ScreenState extends State<Question1Screen> {
                     elevation: 0,
                   ),
                   onPressed: () {
-                    // Acción siguiente
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const Question2Screen(),
+                      ),
+                    );
                   },
                   child: const Text(
                     'Siguiente',
