@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'start_questionnaire.dart';
+import '../../widgets/confirm_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -26,34 +27,17 @@ class WelcomeScreen extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
               SizedBox(height: 48),
-              SizedBox(
-                width: 260,
-                height: 56,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFA366),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+              ConfirmButton(
+                text: 'Siguiente',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const StartQuestionnaireScreen(),
                     ),
-                    elevation: 0,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const StartQuestionnaireScreen(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Siguiente',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                  );
+                },
+                textColor: Colors.black,
               ),
               SizedBox(height: 32),
             ],

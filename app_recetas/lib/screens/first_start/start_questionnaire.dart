@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../home.dart';
+import '/widgets/confirm_button.dart';
 import 'questionnaire/question_1.dart';
 
 class StartQuestionnaireScreen extends StatelessWidget {
@@ -27,34 +28,17 @@ class StartQuestionnaireScreen extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
               SizedBox(height: 48),
-              SizedBox(
-                width: 260,
-                height: 56,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFA366),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+              ConfirmButton(
+                text: 'Comenzar',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Question1Screen(),
                     ),
-                    elevation: 0,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Question1Screen(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Comenzar',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                  );
+                },
+                textColor: Colors.black,
               ),
               SizedBox(height: 15),
               GestureDetector(

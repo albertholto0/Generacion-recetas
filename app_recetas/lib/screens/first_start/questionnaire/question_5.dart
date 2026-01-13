@@ -33,8 +33,7 @@ class Question5Screen extends StatelessWidget {
               const SizedBox(height: 32),
               Image.asset(
                 'assets/gato-chef.png',
-                width: 180,
-                height: 180,
+                width: 300,
                 fit: BoxFit.contain,
               ),
               const Spacer(),

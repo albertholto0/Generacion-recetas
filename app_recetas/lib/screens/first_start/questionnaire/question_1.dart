@@ -137,7 +137,7 @@ class _Question1ScreenState extends State<Question1Screen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 5, 5, 5),
                     ),
                   ),
                 ),
