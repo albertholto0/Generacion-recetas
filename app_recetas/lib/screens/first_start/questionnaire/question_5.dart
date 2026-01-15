@@ -1,3 +1,4 @@
+import 'package:app_recetas/widgets/progress_bar.dart';
 import 'package:flutter/material.dart';
 import '../../home.dart';
 import '/widgets/next_button.dart';
@@ -19,6 +20,8 @@ class Question5Screen extends StatelessWidget {
                 'Paso 5 de 5',
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
               ),
+              const SizedBox(height: 8),
+              Center(child: CustomProgressBar(value: 1.0)),
               const SizedBox(height: 32),
               const Text(
                 '¡Perfecto!\nYa te conozco.',
