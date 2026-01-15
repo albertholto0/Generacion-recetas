@@ -44,18 +44,15 @@ class _Question4ScreenState extends State<Question4Screen> {
               Center(child: CustomProgressBar(value: 0.8)),
               const SizedBox(height: 24),
               const Text(
-                '¿Tienes alguna\nrestricción temporal de salud?',
+                'Tu o alguien de tu familia,\n¿Tiene alguna restricción\ntemporal de salud?',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 16),
               Image.asset(
                 'assets/no-comer.png',
-                width: 140,
-                height: 120,
+                height: 150,
                 fit: BoxFit.contain,
               ),
-              const SizedBox(height: 12),
               ...List.generate(_options.length, (index) {
                 final option = _options[index];
                 final isNinguna = index == _options.length - 1;
