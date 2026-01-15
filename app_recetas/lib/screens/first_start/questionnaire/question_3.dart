@@ -2,6 +2,7 @@ import 'question_4.dart';
 import 'package:flutter/material.dart';
 import '/widgets/progress_bar.dart';
 import '/widgets/custom_input.dart';
+import '/widgets/next_button.dart';
 
 class Question3Screen extends StatefulWidget {
   const Question3Screen({super.key});
@@ -63,34 +64,14 @@ class _Question3ScreenState extends State<Question3Screen> {
                 keyboardType: TextInputType.number,
               ),
               const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFA366),
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+              NextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const Question4Screen(),
                     ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const Question4Screen(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Siguiente',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
               const SizedBox(height: 24),
             ],

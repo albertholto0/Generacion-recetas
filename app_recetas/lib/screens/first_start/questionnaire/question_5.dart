@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../home.dart';
+import '/widgets/next_button.dart';
 
 class Question5Screen extends StatelessWidget {
   const Question5Screen({super.key});
@@ -37,35 +38,14 @@ class Question5Screen extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
               const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFA366),
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
-                      (route) => false,
-                    );
-                  },
-                  child: const Text(
-                    'Ir a la pantalla principal',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+              NextButton(
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    (route) => false,
+                  );
+                },
+                text: 'Ir a la pantalla principal',
               ),
               const SizedBox(height: 32),
             ],

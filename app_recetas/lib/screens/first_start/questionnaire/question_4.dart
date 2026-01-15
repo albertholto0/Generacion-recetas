@@ -1,6 +1,7 @@
 import 'question_5.dart';
 import 'package:flutter/material.dart';
 import '/widgets/progress_bar.dart';
+import '/widgets/next_button.dart';
 
 class Question4Screen extends StatefulWidget {
   const Question4Screen({super.key});
@@ -107,36 +108,17 @@ class _Question4ScreenState extends State<Question4Screen> {
                 style: TextStyle(fontSize: 13, color: Colors.black45),
               ),
               const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFA366),
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: _selectedOptions.isNotEmpty
-                      ? () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const Question5Screen(),
-                            ),
-                          );
-                        }
-                      : null,
-                  child: const Text(
-                    'Siguiente',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+              NextButton(
+                onPressed: _selectedOptions.isNotEmpty
+                    ? () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const Question5Screen(),
+                          ),
+                        );
+                      }
+                    : null,
+                text: 'Siguiente',
               ),
               const SizedBox(height: 24),
             ],

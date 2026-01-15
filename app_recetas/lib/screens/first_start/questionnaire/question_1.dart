@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/widgets/progress_bar.dart';
 import 'question_2.dart';
+import '/widgets/next_button.dart';
 
 class Question1Screen extends StatefulWidget {
   const Question1Screen({super.key});
@@ -10,7 +11,6 @@ class Question1Screen extends StatefulWidget {
 }
 
 class _Question1ScreenState extends State<Question1Screen> {
-  // Lista de herramientas seleccionadas
   final Set<int> _selectedTools = {};
 
   final List<_ToolData> _tools = const [
@@ -114,33 +114,14 @@ class _Question1ScreenState extends State<Question1Screen> {
                   },
                 ),
               ),
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFA366),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+              NextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const Question2Screen(),
                     ),
-                    elevation: 0,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const Question2Screen(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Siguiente',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 5, 5, 5),
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
               const SizedBox(height: 24),
             ],
