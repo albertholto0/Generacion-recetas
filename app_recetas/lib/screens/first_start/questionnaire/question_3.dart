@@ -2,6 +2,7 @@ import 'question_4.dart';
 import 'package:flutter/material.dart';
 import '/widgets/progress_bar.dart';
 import '/widgets/custom_input.dart';
+import '/widgets/custom_dropdown.dart';
 import '/widgets/next_button.dart';
 
 class Question3Screen extends StatefulWidget {
@@ -12,9 +13,15 @@ class Question3Screen extends StatefulWidget {
 }
 
 class _Question3ScreenState extends State<Question3Screen> {
-  final TextEditingController _tiempoController = TextEditingController();
+  String? _tiempoSelected;
   final TextEditingController _edadController = TextEditingController();
   final TextEditingController _personasController = TextEditingController();
+  final List<String> tiempoOptions = [
+    'Menos de 15 minutos',
+    '15-30 minutos',
+    '30-60 minutos',
+    'Más de 1 hora',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +53,15 @@ class _Question3ScreenState extends State<Question3Screen> {
                 fit: BoxFit.contain,
               ),
               const SizedBox(height: 24),
-              CustomInput(
+              CustomDropdown(
                 label: '¿Cuánto tiempo dedicas a cocinar?',
-                controller: _tiempoController,
+                items: tiempoOptions,
+                value: _tiempoSelected,
+                onChanged: (value) {
+                  setState(() {
+                    _tiempoSelected = value;
+                  });
+                },
               ),
               const SizedBox(height: 12),
               CustomInput(
@@ -83,7 +96,6 @@ class _Question3ScreenState extends State<Question3Screen> {
 
   @override
   void dispose() {
-    _tiempoController.dispose();
     _edadController.dispose();
     _personasController.dispose();
     super.dispose();

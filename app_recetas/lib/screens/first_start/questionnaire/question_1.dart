@@ -16,13 +16,22 @@ class _Question1ScreenState extends State<Question1Screen> {
   final List<_ToolData> _tools = const [
     _ToolData(icon: Icons.air, label: 'Freidora'),
     _ToolData(icon: Icons.microwave, label: 'Microondas'),
-    _ToolData(icon: Icons.local_laundry_service, label: 'Licuadora'),
+    _ToolData(icon: Icons.blender, label: 'Licuadora'),
     _ToolData(icon: Icons.fireplace, label: 'Estufa'),
     _ToolData(icon: Icons.coffee_maker, label: 'Cafetera'),
     _ToolData(icon: Icons.kitchen, label: 'Horno'),
     _ToolData(icon: Icons.kitchen, label: 'Refrigerador'),
     _ToolData(icon: Icons.soup_kitchen, label: 'Olla'),
     _ToolData(icon: Icons.set_meal, label: 'Sartén'),
+    _ToolData(icon: Icons.local_drink, label: 'Vaso medidor'),
+    _ToolData(icon: Icons.scale, label: 'Báscula de cocina'),
+    _ToolData(icon: Icons.restaurant, label: 'Procesador de alimentos'),
+    _ToolData(icon: Icons.bakery_dining, label: 'Tostadora'),
+    _ToolData(icon: Icons.bubble_chart, label: 'Tetera'),
+    _ToolData(icon: Icons.filter_list, label: 'Colador'),
+    _ToolData(icon: Icons.lunch_dining, label: 'Plato hondo'),
+    _ToolData(icon: Icons.water_drop, label: 'Exprimidor'),
+    _ToolData(icon: Icons.dashboard, label: 'Tabla de cortar'),
   ];
 
   @override
@@ -58,62 +67,70 @@ class _Question1ScreenState extends State<Question1Screen> {
                 'Seleccione',
                 style: TextStyle(fontSize: 15, color: Colors.black54),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 24),
               Expanded(
-                child: GridView.builder(
-                  itemCount: _tools.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    childAspectRatio: 1,
-                  ),
-                  itemBuilder: (context, index) {
-                    final selected = _selectedTools.contains(index);
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (selected) {
-                            _selectedTools.remove(index);
-                          } else {
-                            _selectedTools.add(index);
-                          }
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: selected
-                              ? Color(0xFFFFA366)
-                              : Colors.grey[200],
-                          borderRadius: BorderRadius.circular(16),
-                          border: selected
-                              ? Border.all(color: Color(0xFFFFA366), width: 2)
-                              : null,
+                child: SingleChildScrollView(
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: _tools.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 16,
+                          childAspectRatio: 1,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              _tools[index].icon,
-                              size: 36,
-                              color: selected ? Colors.white : Colors.black54,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              _tools[index].label,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: selected ? Colors.white : Colors.black87,
-                                fontSize: 13,
+                    itemBuilder: (context, index) {
+                      final selected = _selectedTools.contains(index);
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selected) {
+                              _selectedTools.remove(index);
+                            } else {
+                              _selectedTools.add(index);
+                            }
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: selected
+                                ? Color(0xFFFFA366)
+                                : Colors.grey[200],
+                            borderRadius: BorderRadius.circular(16),
+                            border: selected
+                                ? Border.all(color: Color(0xFFFFA366), width: 2)
+                                : null,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                _tools[index].icon,
+                                size: 36,
+                                color: selected ? Colors.white : Colors.black54,
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 8),
+                              Text(
+                                _tools[index].label,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: selected
+                                      ? Colors.white
+                                      : Colors.black87,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
+              const SizedBox(height: 24),
               NextButton(
                 onPressed: () {
                   Navigator.of(context).push(
