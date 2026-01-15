@@ -1,5 +1,6 @@
 import 'question_4.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '/widgets/progress_bar.dart';
 import '/widgets/custom_input.dart';
 import '/widgets/custom_dropdown.dart';
@@ -68,6 +69,7 @@ class _Question3ScreenState extends State<Question3Screen> {
                 label: '¿Cuál es tu edad?',
                 controller: _edadController,
                 keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               const SizedBox(height: 12),
               CustomInput(
@@ -75,6 +77,7 @@ class _Question3ScreenState extends State<Question3Screen> {
                     '¿Para cuántas personas cocinas habitualmente? (incluyéndote)',
                 controller: _personasController,
                 keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               const Spacer(),
               NextButton(

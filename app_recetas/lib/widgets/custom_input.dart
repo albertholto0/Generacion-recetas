@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomInput extends StatelessWidget {
   final String label;
   final TextEditingController controller;
   final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomInput({
     required this.label,
     required this.controller,
     this.keyboardType,
+    this.inputFormatters,
     super.key,
   });
 
@@ -22,6 +25,7 @@ class CustomInput extends StatelessWidget {
         TextField(
           controller: controller,
           keyboardType: keyboardType,
+          inputFormatters: inputFormatters,
           decoration: InputDecoration(
             hintText: 'Escribe aquí',
             hintStyle: const TextStyle(
