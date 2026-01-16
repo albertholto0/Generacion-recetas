@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "838220812242",
+    "project_id": "generacion-recetas",
+    "storage_bucket": "generacion-recetas.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838220812242:android:7bc304be76d0ba577a820b",
+        "android_client_info": {
+          "package_name": "com.example.app_recetas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7m7XBkJmX3jbYqxZ2ZfAg2i-Xk_JjEe4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
