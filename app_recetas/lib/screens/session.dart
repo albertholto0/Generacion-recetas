@@ -1,17 +1,25 @@
+import 'package:app_recetas/screens/home.dart';
+
 import '/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/widgets/confirm_button.dart';
 import 'register.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -63,26 +71,47 @@ class LoginScreen extends StatelessWidget {
                     obscureText: true,
                   ),
                   const SizedBox(height: 20),
-                  ConfirmButton(
-                    text: 'Entrar',
-                    onPressed: () async {
-                      String email = emailController.text;
-                      String password = passwordController.text;
-                      AuthService authService = AuthService();
-                      User? user = await authService.signInWithEmailAndPassword(
-                        email,
-                        password,
-                      );
-                      if (user != null) {
-                        // ignore: avoid_print
-                        print('Inicio de sesión exitoso');
-                      } else {
-                        // ignore: avoid_print
-                        print('Error al iniciar sesión');
-                      }
-                    },
-                    textColor: Colors.white,
-                  ),
+                  isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : ConfirmButton(
+                          text: 'Entrar',
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+
+                            AuthService authService = AuthService();
+                            User? user = await authService
+                                .signInWithEmailAndPassword(
+                                  emailController.text.trim(),
+                                  passwordController.text,
+                                );
+
+                            if (mounted) {
+                              setState(() {
+                                isLoading = false;
+                              });
+
+                              if (user != null) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomeScreen(),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Error al iniciar sesión. Verifica tus credenciales.',
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          textColor: Colors.white,
+                        ),
                   const SizedBox(height: 12),
                   TextButton(
                     onPressed: () {

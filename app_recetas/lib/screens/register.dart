@@ -4,16 +4,22 @@ import 'package:flutter/material.dart';
 import '/widgets/confirm_button.dart';
 import 'session.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController lastnameController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
 
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController lastnameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -89,32 +95,75 @@ class RegisterScreen extends StatelessWidget {
                     obscureText: true,
                   ),
                   const SizedBox(height: 20),
-                  ConfirmButton(
-                    text: 'Registrarse',
-                    onPressed: () async {
-                      String email = emailController.text;
-                      String password = passwordController.text;
-                      String name = nameController.text;
-                      String lastname = lastnameController.text;
+                  isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : ConfirmButton(
+                          text: 'Registrarse',
+                          onPressed: () async {
+                            FocusScope.of(context).unfocus();
+                            setState(() {
+                              isLoading = true;
+                            });
 
-                      AuthService authService = AuthService();
-                      User? user = await authService
-                          .registerWithEmailAndPassword(
-                            email,
-                            password,
-                            name,
-                            lastname,
-                          );
-                      if (user != null) {
-                        // ignore: avoid_print
-                        print('Registro exitoso');
-                      } else {
-                        // ignore: avoid_print
-                        print('Error al registrarse');
-                      }
-                    },
-                    textColor: Colors.white,
-                  ),
+                            String name = nameController.text;
+                            String lastname = lastnameController.text;
+                            String email = emailController.text;
+                            String password = passwordController.text;
+
+                            try {
+                              AuthService authService = AuthService();
+                              User? user = await authService
+                                  .registerWithEmailAndPassword(
+                                    email,
+                                    password,
+                                    name,
+                                    lastname,
+                                  );
+
+                              setState(() {
+                                isLoading = false;
+                              });
+
+                              if (user != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Usuario registrado exitosamente',
+                                    ),
+                                  ),
+                                );
+                                Future.delayed(
+                                  const Duration(milliseconds: 500),
+                                  () {
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginScreen(),
+                                      ),
+                                      (route) => false,
+                                    );
+                                  },
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Error al registrarse'),
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              setState(() {
+                                isLoading = false;
+                              });
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Error: $e')),
+                              );
+                            }
+                          },
+                          textColor: Colors.white,
+                        ),
                   const SizedBox(height: 12),
                   TextButton(
                     onPressed: () {
