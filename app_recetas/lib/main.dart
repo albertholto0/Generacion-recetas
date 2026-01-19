@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/first_start/welcome.dart';
 import 'configurations/app_theme.dart';
+import 'screens/session.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: WelcomeScreen(),
+      home: LoginScreen(),
       themeMode: ThemeMode.system,
     );
   }
