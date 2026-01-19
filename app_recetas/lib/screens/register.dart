@@ -19,6 +19,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isLoading = false;
 
   @override
+  void dispose() {
+    nameController.dispose();
+    lastnameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -105,20 +114,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               isLoading = true;
                             });
 
-                            String name = nameController.text;
-                            String lastname = lastnameController.text;
-                            String email = emailController.text;
-                            String password = passwordController.text;
-
                             try {
                               AuthService authService = AuthService();
                               User? user = await authService
                                   .registerWithEmailAndPassword(
-                                    email,
-                                    password,
-                                    name,
-                                    lastname,
+                                    emailController.text.trim(),
+                                    passwordController.text,
+                                    nameController.text,
+                                    lastnameController.text,
                                   );
+
+                              if (!mounted) return;
 
                               setState(() {
                                 isLoading = false;
@@ -132,18 +138,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                   ),
                                 );
-                                Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                  () {
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginScreen(),
-                                      ),
-                                      (route) => false,
-                                    );
-                                  },
+
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                  (route) => false,
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -153,13 +153,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 );
                               }
                             } catch (e) {
-                              setState(() {
-                                isLoading = false;
-                              });
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Error: $e')),
-                              );
+                              if (mounted) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Error: $e')),
+                                );
+                              }
                             }
                           },
                           textColor: Colors.white,
