@@ -1,14 +1,16 @@
-import '/services/auth_service.dart';
+import 'package:app_recetas/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/widgets/confirm_button.dart';
-import 'register.dart';
+import 'session.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController lastnameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
@@ -25,18 +27,42 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 24),
                   const Text(
-                    'Iniciar sesión',
+                    'Crear cuenta',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 12),
                   Image.asset(
-                    'assets/inicio_session.png',
+                    'assets/registro.png',
                     width: 180,
                     height: 180,
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 20),
+                  TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Nombre',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xFFF9F9F9),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: lastnameController,
+                    decoration: InputDecoration(
+                      labelText: 'Apellido',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xFFF9F9F9),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   TextField(
                     controller: emailController,
                     decoration: InputDecoration(
@@ -64,21 +90,27 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   ConfirmButton(
-                    text: 'Entrar',
+                    text: 'Registrarse',
                     onPressed: () async {
                       String email = emailController.text;
                       String password = passwordController.text;
+                      String name = nameController.text;
+                      String lastname = lastnameController.text;
+
                       AuthService authService = AuthService();
-                      User? user = await authService.signInWithEmailAndPassword(
-                        email,
-                        password,
-                      );
+                      User? user = await authService
+                          .registerWithEmailAndPassword(
+                            email,
+                            password,
+                            name,
+                            lastname,
+                          );
                       if (user != null) {
                         // ignore: avoid_print
-                        print('Inicio de sesión exitoso');
+                        print('Registro exitoso');
                       } else {
                         // ignore: avoid_print
-                        print('Error al iniciar sesión');
+                        print('Error al registrarse');
                       }
                     },
                     textColor: Colors.white,
@@ -89,11 +121,11 @@ class LoginScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const RegisterScreen(),
+                          builder: (context) => const LoginScreen(),
                         ),
                       );
                     },
-                    child: const Text('¿No tienes una cuenta? Regístrate'),
+                    child: const Text('¿Ya tienes una cuenta? Inicia sesión'),
                   ),
                   const SizedBox(height: 24),
                 ],
