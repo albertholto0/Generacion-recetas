@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'configurations/app_theme.dart';
-import 'screens/session.dart';
+//import 'screens/session.dart';
 import 'firebase_options.dart';
+import 'screens/home.dart';
 
 void main() async {
   // En esta parte se inicializa Firebase
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: LoginScreen(),
+      home: const HomeScreen(),
+      //home: LoginScreen(),
       themeMode: ThemeMode.system,
     );
   }
