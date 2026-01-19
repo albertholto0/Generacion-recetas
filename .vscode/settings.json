@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/home/albertholto/Generacion-recetas/app_recetas/linux/flutter"
+    "cmake.sourceDirectory": "/home/albertholto/Generacion-recetas/app_recetas/linux/flutter",
+    "editor.fontLigatures": true
 }
