@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'configurations/app_theme.dart';
 import 'firebase_options.dart';
 import 'screens/main_wrapped.dart';
+import 'screens/first_start/welcome.dart';
 
 void main() async {
   // En esta parte se inicializa Firebase
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: const MainWrapper(),
+      home: const WelcomeScreen(),
       themeMode: ThemeMode.system,
     );
   }
