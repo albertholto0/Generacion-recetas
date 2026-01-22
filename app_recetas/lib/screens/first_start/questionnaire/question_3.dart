@@ -1,22 +1,20 @@
-import 'question_4.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '/widgets/progress_bar.dart';
 import '/widgets/custom_input.dart';
 import '/widgets/custom_dropdown.dart';
-import '/widgets/next_button.dart';
 
-class Question3Screen extends StatefulWidget {
-  const Question3Screen({super.key});
+class Question3Content extends StatefulWidget {
+  const Question3Content({super.key});
 
   @override
-  State<Question3Screen> createState() => _Question3ScreenState();
+  State<Question3Content> createState() => _Question3ContentState();
 }
 
-class _Question3ScreenState extends State<Question3Screen> {
+class _Question3ContentState extends State<Question3Content> {
   String? _tiempoSelected;
   final TextEditingController _edadController = TextEditingController();
   final TextEditingController _personasController = TextEditingController();
+
   final List<String> tiempoOptions = [
     'Menos de 15 minutos',
     '15-30 minutos',
@@ -25,82 +23,63 @@ class _Question3ScreenState extends State<Question3Screen> {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 24),
-              const Text(
-                'Paso 3 de 5',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-              ),
-              const SizedBox(height: 8),
-              Center(child: CustomProgressBar(value: 0.6)),
-              const SizedBox(height: 24),
-              const Text(
-                'Cuéntanos más sobre ti y\ntus hábitos de cocina',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              Image.asset(
-                'assets/habitos-cocina.png',
-                width: 140,
-                height: 120,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 24),
-              CustomDropdown(
-                label: '¿Cuánto tiempo dedicas a cocinar?',
-                items: tiempoOptions,
-                value: _tiempoSelected,
-                onChanged: (value) {
-                  setState(() {
-                    _tiempoSelected = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 12),
-              CustomInput(
-                label: '¿Cuál es tu edad?',
-                controller: _edadController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              ),
-              const SizedBox(height: 12),
-              CustomInput(
-                label:
-                    '¿Para cuántas personas cocinas habitualmente? (incluyéndote)',
-                controller: _personasController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              ),
-              const Spacer(),
-              NextButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const Question4Screen(),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 24),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
   void dispose() {
+    // Es buena práctica limpiar los controladores
     _edadController.dispose();
     _personasController.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Retornamos directamente el contenido central sin Scaffold
+    return SingleChildScrollView(
+      // Añadimos esto para evitar errores de teclado en pantallas pequeñas
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 24),
+          const Text(
+            'Cuéntanos un poco más',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 32),
+
+          CustomDropdown(
+            label: '¿Cuánto tiempo dedicas a cocinar?',
+            items: tiempoOptions,
+            value: _tiempoSelected,
+            onChanged: (value) {
+              setState(() {
+                _tiempoSelected = value;
+              });
+            },
+          ),
+
+          const SizedBox(height: 24),
+
+          CustomInput(
+            label: '¿Cuál es tu edad?',
+            controller: _edadController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          ),
+
+          const SizedBox(height: 24),
+
+          CustomInput(
+            label:
+                '¿Para cuántas personas cocinas habitualmente? (incluyéndote)',
+            controller: _personasController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          ),
+
+          // El espaciado final para que no pegue con el botón Siguiente del padre
+          const SizedBox(height: 24),
+        ],
+      ),
+    );
   }
 }

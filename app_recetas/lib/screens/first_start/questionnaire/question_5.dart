@@ -1,60 +1,39 @@
-import 'package:app_recetas/widgets/progress_bar.dart';
 import 'package:flutter/material.dart';
-import '../../home.dart';
-import '/widgets/next_button.dart';
 
-class Question5Screen extends StatelessWidget {
-  const Question5Screen({super.key});
+class Question5Content extends StatelessWidget {
+  const Question5Content({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 24),
-              const Text(
-                'Paso 5 de 5',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-              ),
-              const SizedBox(height: 8),
-              Center(child: CustomProgressBar(value: 1.0)),
-              const SizedBox(height: 32),
-              const Text(
-                '¡Perfecto!\nYa te conozco.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 18),
-              const Text(
-                'A partir de ahora, mi trabajo es sorprendente.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-              ),
-              const SizedBox(height: 32),
-              Image.asset(
-                'assets/gato-chef.png',
-                width: 300,
-                fit: BoxFit.contain,
-              ),
-              const Spacer(),
-              NextButton(
-                onPressed: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                    (route) => false,
-                  );
-                },
-                text: 'Ir a la pantalla principal',
-              ),
-              const SizedBox(height: 32),
-            ],
+    // Retornamos directamente el contenido de éxito
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(height: 48),
+        const Text(
+          '¡Perfecto!\nYa te conozco.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 18),
+        const Text(
+          'A partir de ahora, mi trabajo es sorprendente.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+        ),
+        const SizedBox(height: 48),
+        // Imagen decorativa
+        Expanded(
+          child: Image.asset(
+            'assets/gato-chef.png',
+            width: 300,
+            fit: BoxFit.contain,
           ),
         ),
-      ),
+        const SizedBox(height: 24),
+        // Nota: El botón "Ir a la pantalla principal" ya no va aquí,
+        // lo pondrá el QuestionnaireWrapper automáticamente.
+      ],
     );
   }
 }

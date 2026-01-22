@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../home.dart';
 import '/widgets/confirm_button.dart';
-import 'questionnaire/question_1.dart';
+import 'questionnaire/questionnaire_wrapper.dart';
 
 class StartQuestionnaireScreen extends StatelessWidget {
   const StartQuestionnaireScreen({super.key});
@@ -36,7 +36,7 @@ class StartQuestionnaireScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Question1Screen(),
+                        builder: (context) => const QuestionnaireWrapper(),
                       ),
                     );
                   },
