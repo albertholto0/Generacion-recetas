@@ -23,19 +23,6 @@ class _QuestionnaireWrapperState extends State<QuestionnaireWrapper> {
     if (_currentStep < _totalSteps) {
       setState(() => _currentStep++);
     } else {
-      //   Navigator.pushAndRemoveUntil(
-      //     context,
-      //     PageRouteBuilder(
-      //       pageBuilder: (context, animation, secondaryAnimation) =>
-      //           const MainWrapper(),
-      //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      //         return FadeTransition(opacity: animation, child: child);
-      //       },
-      //       transitionDuration: const Duration(milliseconds: 500),
-      //     ),
-      //     (route) => false,
-      //   );
-      // }
       Navigator.pushAndRemoveUntil(
         context,
         PageRouteBuilder(

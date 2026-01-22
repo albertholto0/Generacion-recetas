@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '/widgets/custom_input.dart';
 import '/widgets/custom_dropdown.dart';
+import '/widgets/custom_input.dart';
 
 class Question3Content extends StatefulWidget {
   const Question3Content({super.key});
@@ -24,7 +24,6 @@ class _Question3ContentState extends State<Question3Content> {
 
   @override
   void dispose() {
-    // Es buena práctica limpiar los controladores
     _edadController.dispose();
     _personasController.dispose();
     super.dispose();
@@ -32,9 +31,7 @@ class _Question3ContentState extends State<Question3Content> {
 
   @override
   Widget build(BuildContext context) {
-    // Retornamos directamente el contenido central sin Scaffold
     return SingleChildScrollView(
-      // Añadimos esto para evitar errores de teclado en pantallas pequeñas
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -76,7 +73,6 @@ class _Question3ContentState extends State<Question3Content> {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
 
-          // El espaciado final para que no pegue con el botón Siguiente del padre
           const SizedBox(height: 24),
         ],
       ),

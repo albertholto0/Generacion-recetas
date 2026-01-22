@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/data/tools.dart'; // Importa el archivo anterior
 
 class Question1Content extends StatefulWidget {
   const Question1Content({super.key});
@@ -8,117 +9,110 @@ class Question1Content extends StatefulWidget {
 }
 
 class _Question1ContentState extends State<Question1Content> {
-  final Set<int> _selectedTools = {};
+  final Set<String> _selectedToolIds = {};
+  String _searchQuery = "";
 
-  final List<_ToolData> _tools = const [
-    _ToolData(icon: Icons.air, label: 'Freidora'),
-    _ToolData(icon: Icons.microwave, label: 'Microondas'),
-    _ToolData(icon: Icons.blender, label: 'Licuadora'),
-    _ToolData(icon: Icons.fireplace, label: 'Estufa'),
-    _ToolData(icon: Icons.coffee_maker, label: 'Cafetera'),
-    _ToolData(icon: Icons.kitchen, label: 'Horno'),
-    _ToolData(icon: Icons.kitchen, label: 'Refrigerador'),
-    _ToolData(icon: Icons.soup_kitchen, label: 'Olla'),
-    _ToolData(icon: Icons.set_meal, label: 'Sartén'),
-    _ToolData(icon: Icons.local_drink, label: 'Vaso medidor'),
-    _ToolData(icon: Icons.scale, label: 'Báscula de cocina'),
-    _ToolData(icon: Icons.restaurant, label: 'Procesador de alimentos'),
-    _ToolData(icon: Icons.bakery_dining, label: 'Tostadora'),
-  ];
+  // Filtramos la lista según lo que escriba el usuario
+  List<KitchenTool> get _filteredTools => ToolsRepository.allTools
+      .where(
+        (tool) => tool.label.toLowerCase().contains(_searchQuery.toLowerCase()),
+      )
+      .toList();
 
   @override
   Widget build(BuildContext context) {
-    // Retornamos directamente una Column o el contenido
-    // Ya no hay Scaffold, SafeArea, ProgressBar ni NextButton aquí
     return Column(
       children: [
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
         const Text(
-          '¿Con qué herramientas\nde cocina cuentas?',
+          '¿Con qué herramientas cuentas?',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 24),
-        Expanded(
-          child: Scrollbar(
-            thumbVisibility: true,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.85,
-                ),
-                itemCount: _tools.length,
-                itemBuilder: (context, index) {
-                  final selected = _selectedTools.contains(index);
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (selected) {
-                          _selectedTools.remove(index);
-                        } else {
-                          _selectedTools.add(index);
-                        }
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: selected
-                            ? const Color(0xFFFFA366)
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: selected
-                              ? const Color(0xFFFFA366)
-                              : Colors.black12,
-                          width: 1.5,
-                        ),
-                        boxShadow: [
-                          if (selected)
-                            BoxShadow(
-                              color: const Color(0xFFFFA366).withOpacity(0.3),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            _tools[index].icon,
-                            size: 36,
-                            color: selected ? Colors.white : Colors.black54,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            _tools[index].label,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: selected ? Colors.white : Colors.black87,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+        const SizedBox(height: 16),
+
+        // --- BUSCADOR ---
+        TextField(
+          onChanged: (value) => setState(() => _searchQuery = value),
+          decoration: InputDecoration(
+            hintText: 'Buscar herramienta...',
+            prefixIcon: const Icon(Icons.search),
+            filled: true,
+            fillColor: Colors.black12.withOpacity(0.05),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
             ),
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        Expanded(
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 0.9,
+            ),
+            itemCount: _filteredTools.length,
+            itemBuilder: (context, index) {
+              final tool = _filteredTools[index];
+              final isSelected = _selectedToolIds.contains(tool.id);
+
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isSelected
+                        ? _selectedToolIds.remove(tool.id)
+                        : _selectedToolIds.add(tool.id);
+                  });
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  decoration: BoxDecoration(
+                    color: isSelected ? const Color(0xFFFFA366) : Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: isSelected
+                          ? const Color(0xFFFFA366)
+                          : Colors.black12,
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        tool.icon,
+                        size: 30,
+                        color: isSelected ? Colors.white : Colors.orangeAccent,
+                      ),
+                      const SizedBox(height: 6),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Text(
+                          tool.label,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: TextStyle(
+                            color: isSelected ? Colors.white : Colors.black87,
+                            fontSize: 11,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ],
     );
   }
-}
-
-// Mantenemos la clase de datos al final
-class _ToolData {
-  final IconData icon;
-  final String label;
-  const _ToolData({required this.icon, required this.label});
 }

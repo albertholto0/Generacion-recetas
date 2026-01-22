@@ -21,6 +21,7 @@ class _Question4ContentState extends State<Question4Content> {
     ),
     _RestrictionOption(title: 'Dieta blanda', subtitle: 'Me encuentro enfermo'),
     _RestrictionOption(title: 'Ninguna por el momento', subtitle: ''),
+    _RestrictionOption(title: 'Otra', subtitle: 'Especificar'),
   ];
 
   @override
@@ -41,7 +42,6 @@ class _Question4ContentState extends State<Question4Content> {
         ),
         const SizedBox(height: 24),
 
-        // Lista de opciones
         Expanded(
           child: ListView.builder(
             itemCount: _options.length,
@@ -100,7 +100,6 @@ class _Question4ContentState extends State<Question4Content> {
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 13, color: Colors.black45),
         ),
-        const SizedBox(height: 16),
       ],
     );
   }
