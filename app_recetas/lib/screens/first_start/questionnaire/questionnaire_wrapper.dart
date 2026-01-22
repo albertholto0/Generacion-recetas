@@ -1,3 +1,4 @@
+import 'package:app_recetas/screens/main_wrapped.dart';
 import 'package:flutter/material.dart';
 import 'question_1.dart';
 import 'question_2.dart';
@@ -22,11 +23,34 @@ class _QuestionnaireWrapperState extends State<QuestionnaireWrapper> {
     if (_currentStep < _totalSteps) {
       setState(() => _currentStep++);
     } else {
-      // Lógica final para ir al Home
+      //   Navigator.pushAndRemoveUntil(
+      //     context,
+      //     PageRouteBuilder(
+      //       pageBuilder: (context, animation, secondaryAnimation) =>
+      //           const MainWrapper(),
+      //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      //         return FadeTransition(opacity: animation, child: child);
+      //       },
+      //       transitionDuration: const Duration(milliseconds: 500),
+      //     ),
+      //     (route) => false,
+      //   );
+      // }
+      Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const MainWrapper(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        (route) => false,
+      );
     }
   }
 
-  // Función para obtener el widget de la pregunta actual
   Widget _getCurrentQuestion() {
     switch (_currentStep) {
       case 1:
