@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../home.dart';
+import '../home/home.dart';
 import '/widgets/confirm_button.dart';
 import 'questionnaire/questionnaire_wrapper.dart';
 

@@ -4,7 +4,7 @@ import 'recipes.dart';
 import 'kitchen.dart';
 import 'cupboard.dart';
 import 'profile.dart';
-import '../widgets/navigation_bar.dart';
+import '../../widgets/navigation_bar.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});

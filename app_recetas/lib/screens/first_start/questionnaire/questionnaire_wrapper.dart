@@ -1,4 +1,4 @@
-import 'package:app_recetas/screens/main_wrapped.dart';
+import 'package:app_recetas/screens/home/main_wrapped.dart';
 import 'package:flutter/material.dart';
 import 'question_1.dart';
 import 'question_2.dart';

@@ -1,4 +1,4 @@
-import 'package:app_recetas/screens/home.dart';
+import 'package:app_recetas/screens/home/home.dart';
 
 import '/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
