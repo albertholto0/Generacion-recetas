@@ -72,17 +72,46 @@ class _QuestionnaireWrapperState extends State<QuestionnaireWrapper> {
                 ),
               ),
               const SizedBox(height: 8),
-              // La barra de progreso ahora es centralizada
               CustomProgressBar(value: _currentStep / _totalSteps),
-
-              // El contenido que cambia dinámicamente
               Expanded(child: _getCurrentQuestion()),
-
-              const SizedBox(height: 24),
-              NextButton(
-                onPressed: _nextStep,
-                text: _currentStep == _totalSteps ? 'Finalizar' : 'Siguiente',
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  if (_currentStep > 1)
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => setState(() => _currentStep--),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          side: const BorderSide(color: Colors.black12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text(
+                          'Atras',
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                      ),
+                    ),
+                  if (_currentStep > 1) const SizedBox(width: 12),
+                  Expanded(
+                    flex: 2,
+                    child: NextButton(
+                      onPressed: _nextStep,
+                      text: _currentStep == _totalSteps
+                          ? 'Finalizar'
+                          : 'Siguiente',
+                    ),
+                  ),
+                ],
               ),
+
+              // const SizedBox(height: 24),
+              // NextButton(
+              //   onPressed: _nextStep,
+              //   text: _currentStep == _totalSteps ? 'Finalizar' : 'Siguiente',
+              // ),
               const SizedBox(height: 24),
             ],
           ),
