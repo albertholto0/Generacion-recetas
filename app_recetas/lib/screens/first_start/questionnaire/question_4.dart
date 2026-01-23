@@ -9,6 +9,8 @@ class Question4Content extends StatefulWidget {
 }
 
 class _Question4ContentState extends State<Question4Content> {
+  final ScrollController _scrollController = ScrollController();
+
   final Set<int> _selectedOptions = {};
   final TextEditingController _otraController = TextEditingController();
 
@@ -26,6 +28,7 @@ class _Question4ContentState extends State<Question4Content> {
   @override
   void dispose() {
     _otraController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -38,11 +41,27 @@ class _Question4ContentState extends State<Question4Content> {
         _selectedOptions.remove(3);
         if (isSelected) {
           _selectedOptions.add(index);
+
+          if (index == 4) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _scrollToBottom();
+            });
+          }
         } else {
           _selectedOptions.remove(index);
         }
       }
     });
+  }
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   @override
@@ -63,6 +82,7 @@ class _Question4ContentState extends State<Question4Content> {
         const SizedBox(height: 24),
         Expanded(
           child: ListView.builder(
+            controller: _scrollController,
             itemCount: _options.length,
             itemBuilder: (context, index) {
               final option = _options[index];
