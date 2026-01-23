@@ -1,6 +1,8 @@
-import 'package:flutter/rendering.dart';
-
+import 'package:app_recetas/screens/home/main_wrapped.dart';
+import 'package:app_recetas/services/database_service.dart';
 import '/services/auth_service.dart';
+import '/services/database_service.dart';
+import '/screens/home/main_wrapped.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/widgets/confirm_button.dart';
@@ -105,15 +107,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
 
                             if (mounted) {
-                              setState(() {
-                                isLoading = false;
-                              });
-
                               if (user != null) {
+                                bool completed = await DatabaseService()
+                                    .hasCompletedQuestionnaire(user.uid);
+
+                                setState(() {
+                                  isLoading = false;
+                                });
+
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const WelcomeScreen(),
+                                    builder: (context) => completed
+                                        ? const MainWrapper()
+                                        : const WelcomeScreen(),
                                   ),
                                 );
                               } else {

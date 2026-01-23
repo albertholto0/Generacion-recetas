@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/widgets/custom_input.dart';
+import '/services/questionnaire_provider.dart';
 
 class Question4Content extends StatefulWidget {
   const Question4Content({super.key});
@@ -51,6 +52,17 @@ class _Question4ContentState extends State<Question4Content> {
           _selectedOptions.remove(index);
         }
       }
+      QuestionnaireData().restrictions = _selectedOptions
+          .map((i) => _options[i].title)
+          .toList();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _otraController.addListener(() {
+      QuestionnaireData().otherRestriction = _otraController.text;
     });
   }
 

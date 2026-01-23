@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '/data/tools.dart'; // Importa el archivo anterior
+import '/data/tools.dart';
+import '/services/questionnaire_provider.dart';
 
 class Question1Content extends StatefulWidget {
   const Question1Content({super.key});
@@ -66,6 +67,7 @@ class _Question1ContentState extends State<Question1Content> {
                     isSelected
                         ? _selectedToolIds.remove(tool.id)
                         : _selectedToolIds.add(tool.id);
+                    QuestionnaireData().tools = _selectedToolIds.toList();
                   });
                 },
                 child: AnimatedContainer(

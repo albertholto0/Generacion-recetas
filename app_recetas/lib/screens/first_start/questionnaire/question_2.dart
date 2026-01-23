@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '/widgets/custom_input.dart'; //
+import '/widgets/custom_input.dart';
+import '/services/questionnaire_provider.dart';
 
 class Question2Content extends StatefulWidget {
   const Question2Content({super.key});
@@ -9,6 +10,21 @@ class Question2Content extends StatefulWidget {
 }
 
 class _Question2ContentState extends State<Question2Content> {
+  @override
+  void initState() {
+    super.initState();
+
+    _controllers['alergias']!.addListener(() {
+      QuestionnaireData().allergies = _controllers['alergias']!.text;
+    });
+    _controllers['disgustos']!.addListener(() {
+      QuestionnaireData().dislikes = _controllers['disgustos']!.text;
+    });
+    _controllers['exclusiones']!.addListener(() {
+      QuestionnaireData().exclusions = _controllers['exclusiones']!.text;
+    });
+  }
+
   final Map<String, TextEditingController> _controllers = {
     'alergias': TextEditingController(),
     'disgustos': TextEditingController(),

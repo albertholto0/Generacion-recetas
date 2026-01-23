@@ -1,5 +1,7 @@
 import 'package:app_recetas/screens/home/main_wrapped.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'question_1.dart';
 import 'question_2.dart';
 import 'question_3.dart';
@@ -7,6 +9,8 @@ import 'question_4.dart';
 import 'question_5.dart';
 import '/widgets/progress_bar.dart';
 import '/widgets/next_button.dart';
+import '/services/database_service.dart';
+import '/services/questionnaire_provider.dart';
 
 class QuestionnaireWrapper extends StatefulWidget {
   const QuestionnaireWrapper({super.key});
@@ -19,22 +23,36 @@ class _QuestionnaireWrapperState extends State<QuestionnaireWrapper> {
   int _currentStep = 1;
   final int _totalSteps = 5;
 
-  void _nextStep() {
+  void _nextStep() async {
     if (_currentStep < _totalSteps) {
       setState(() => _currentStep++);
     } else {
-      Navigator.pushAndRemoveUntil(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const MainWrapper(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          transitionDuration: const Duration(milliseconds: 500),
-        ),
-        (route) => false,
-      );
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+
+      Map<String, dynamic> finalData = QuestionnaireData().toMap();
+
+      await DatabaseService().saveQuestionnaireResults(uid, finalData);
+
+      if (mounted) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MainWrapper()),
+          (route) => false,
+        );
+      }
+
+      //   Navigator.pushAndRemoveUntil(
+      //     context,
+      //     PageRouteBuilder(
+      //       pageBuilder: (context, animation, secondaryAnimation) =>
+      //           const MainWrapper(),
+      //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      //         return FadeTransition(opacity: animation, child: child);
+      //       },
+      //       transitionDuration: const Duration(milliseconds: 500),
+      //     ),
+      //     (route) => false,
+      //   );
     }
   }
 

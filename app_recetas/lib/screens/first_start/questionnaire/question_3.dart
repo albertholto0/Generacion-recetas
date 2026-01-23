@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '/widgets/custom_dropdown.dart';
 import '/widgets/custom_input.dart';
+import '/services/questionnaire_provider.dart';
 
 class Question3Content extends StatefulWidget {
   const Question3Content({super.key});
@@ -21,6 +22,17 @@ class _Question3ContentState extends State<Question3Content> {
     '30-60 minutos',
     'Más de 1 hora',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _edadController.addListener(() {
+      QuestionnaireData().age = int.tryParse(_edadController.text);
+    });
+    _personasController.addListener(() {
+      QuestionnaireData().people = int.tryParse(_personasController.text);
+    });
+  }
 
   @override
   void dispose() {
@@ -50,6 +62,7 @@ class _Question3ContentState extends State<Question3Content> {
             onChanged: (value) {
               setState(() {
                 _tiempoSelected = value;
+                QuestionnaireData().time = value;
               });
             },
           ),
