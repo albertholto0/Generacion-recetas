@@ -1,7 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../services/auth_service.dart';
+import '../login/session.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  String _fullName = "Cargando...";
+  String _email = "";
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserData();
+  }
+
+  Future<void> _getUserData() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      try {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
+            .get();
+
+        if (userDoc.exists) {
+          Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
+          setState(() {
+            _fullName = "${data['name']} ${data['lastname']}";
+            _email = currentUser.email ?? "";
+            _isLoading = false;
+          });
+        }
+      } catch (e) {
+        setState(() {
+          _fullName = "Error al cargar";
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _handleLogout() async {
+    await AuthService().signOut();
+
+    if (mounted) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (route) => false,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,26 +84,48 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundColor: Color(0xFFFFA366),
-                    child: Icon(Icons.person, size: 50, color: Colors.white),
+                    backgroundColor: const Color(0xFFFFA366),
+                    child: _isLoading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                            _fullName.isNotEmpty
+                                ? _fullName[0].toUpperCase()
+                                : "?",
+                            style: const TextStyle(
+                              fontSize: 40,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
-                  SizedBox(width: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Nombre de Usuario',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _isLoading
+                            ? Container(
+                                height: 20,
+                                width: 150,
+                                color: Colors.grey[200],
+                              )
+                            : Text(
+                                _fullName,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                        const SizedBox(height: 8),
+                        Text(
+                          _email,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'usuario@email.com',
-                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -74,7 +153,7 @@ class ProfileScreen extends StatelessWidget {
                 trailing: Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () {},
               ),
-              Spacer(),
+              const Spacer(),
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -83,9 +162,9 @@ class ProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
-                  onPressed: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
+                  onPressed: _handleLogout,
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 32.0,
                       vertical: 12.0,
                     ),
