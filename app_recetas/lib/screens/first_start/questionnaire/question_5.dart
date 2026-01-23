@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Question5Content extends StatelessWidget {
+class Question5Content extends StatefulWidget {
   const Question5Content({super.key});
 
   @override
+  State<Question5Content> createState() => _Question5ContentState();
+}
+
+class _Question5ContentState extends State<Question5Content> {
+  @override
   Widget build(BuildContext context) {
-    // Retornamos directamente el contenido de éxito
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -22,7 +26,6 @@ class Question5Content extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         ),
         const SizedBox(height: 48),
-        // Imagen decorativa
         Expanded(
           child: Image.asset(
             'assets/gato-chef.png',
@@ -31,8 +34,6 @@ class Question5Content extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        // Nota: El botón "Ir a la pantalla principal" ya no va aquí,
-        // lo pondrá el QuestionnaireWrapper automáticamente.
       ],
     );
   }
