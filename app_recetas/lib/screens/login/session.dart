@@ -1,10 +1,11 @@
-import 'package:app_recetas/screens/home/home.dart';
+import 'package:flutter/rendering.dart';
 
 import '/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/widgets/confirm_button.dart';
 import 'register.dart';
+import '../first_start/welcome.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -76,6 +77,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       : ConfirmButton(
                           text: 'Entrar',
                           onPressed: () async {
+                            final email = emailController.text.trim();
+                            final password = passwordController.text.trim();
+
+                            if (email.isEmpty || password.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Faltan Credenciales. Por favor llena todos los campos',
+                                  ),
+                                  backgroundColor: Colors.redAccent,
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                              return;
+                            }
+
                             setState(() {
                               isLoading = true;
                             });
@@ -96,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const HomeScreen(),
+                                    builder: (context) => const WelcomeScreen(),
                                   ),
                                 );
                               } else {

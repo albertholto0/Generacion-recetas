@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'configurations/app_theme.dart';
 import 'firebase_options.dart';
-import 'screens/first_start/welcome.dart';
+import 'screens/login/session.dart';
 
 void main() async {
   // En esta parte se inicializa Firebase
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: const WelcomeScreen(),
+      home: const LoginScreen(),
       themeMode: ThemeMode.system,
     );
   }

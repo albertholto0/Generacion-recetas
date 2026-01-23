@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Question5Content extends StatefulWidget {
+class Question5Content extends StatelessWidget {
   const Question5Content({super.key});
 
-  @override
-  State<Question5Content> createState() => _Question5ContentState();
-}
-
-class _Question5ContentState extends State<Question5Content> {
   @override
   Widget build(BuildContext context) {
     return Column(

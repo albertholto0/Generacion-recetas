@@ -31,7 +31,6 @@ class _Question1ContentState extends State<Question1Content> {
         ),
         const SizedBox(height: 16),
 
-        // --- BUSCADOR ---
         TextField(
           onChanged: (value) => setState(() => _searchQuery = value),
           decoration: InputDecoration(
