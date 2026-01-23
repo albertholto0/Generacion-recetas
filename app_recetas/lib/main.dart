@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'configurations/app_theme.dart';
 import 'firebase_options.dart';
-import 'screens/home/main_wrapped.dart';
 import 'screens/first_start/welcome.dart';
 
 void main() async {
